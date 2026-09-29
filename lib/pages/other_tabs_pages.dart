@@ -4,6 +4,7 @@ import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
 import '../widgets/bottom_nav.dart';
 import '../widgets/top_header.dart';
+import 'exam_list_page.dart';
 import 'schedule_page.dart';
 
 class ExamPage extends StatelessWidget {
@@ -17,64 +18,10 @@ class ExamPage extends StatelessWidget {
     final media = MediaQuery.of(context);
     final isTablet = media.size.shortestSide >= 600;
 
-    final content = Column(
-      children: [
-        TopHeader(
-          title: 'Ujian',
-          matchMapelStyle: true,
-          onAvatarTap: () {
-            if (onTabSelected != null) {
-              onTabSelected!(4);
-            } else {
-              Navigator.pushNamed(context, AppRoutes.profile);
-            }
-          },
-        ),
-        Expanded(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: AppColors.lightBlue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Icon(
-                      Icons.quiz_outlined,
-                      size: 22,
-                      color: AppColors.blue,
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  const Text(
-                    'Halaman Belum Dibuat',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.text,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Fitur Ujian sedang dalam tahap pengembangan.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.greyText,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+    // Konten utama memanggil ExamListPage yang berisi fitur Ujian lengkap
+    final content = ExamListPage(
+      showBottomNav: showBottomNav,
+      onTabSelected: onTabSelected,
     );
 
     if (!showBottomNav) {
@@ -99,6 +46,11 @@ class ExamPage extends StatelessWidget {
 
   void _handleNav(BuildContext context, int index) {
     if (index == 2) return;
+    if (onTabSelected != null) {
+      onTabSelected!(index);
+      return;
+    }
+
     if (index == 0) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(AppRoutes.home, (route) => false);
@@ -209,6 +161,11 @@ class ProfilePage extends StatelessWidget {
 
   void _handleNav(BuildContext context, int index) {
     if (index == 4) return;
+    if (onTabSelected != null) {
+      onTabSelected!(index);
+      return;
+    }
+
     if (index == 0) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(AppRoutes.home, (route) => false);
