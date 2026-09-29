@@ -1,5 +1,7 @@
 class AppRoutes {
-  static const String home = '/';
+  static const String login = '/';
+  static const String home = '/home';
+  static const String register = '/register';
   static const String subjects = '/subjects';
   static const String chapters = '/chapters';
   static const String subchapters = '/subchapters';

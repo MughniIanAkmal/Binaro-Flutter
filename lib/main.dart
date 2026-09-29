@@ -17,6 +17,8 @@ import 'pages/exam_detail_page.dart';
 import 'pages/exam_page.dart';
 import 'pages/exam_result.dart';
 import 'pages/schedule_page.dart';
+import 'widgets/login/login_mobile.dart';
+import 'widgets/login/register_mobile.dart';
 import 'widgets/profile/profile_page.dart' as profile;
 
 void main() {
@@ -41,8 +43,10 @@ class BinaroApp extends StatelessWidget {
       title: 'Binaro',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.login,
       routes: {
+        AppRoutes.login: (context) => const LoginMobilePage(),
+        AppRoutes.register: (context) => const RegisterMobilePage(),
         AppRoutes.home: (context) => const MainShell(),
         AppRoutes.subjects: (context) =>
             const SubjectListPage(showBackButton: true, showBottomNav: true),
