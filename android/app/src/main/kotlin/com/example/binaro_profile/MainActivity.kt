@@ -1,4 +1,4 @@
-package com.binaro.binaro_app
+package com.example.binaro_profile
 
 import io.flutter.embedding.android.FlutterActivity
 

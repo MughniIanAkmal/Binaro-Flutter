@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
 import '../widgets/bottom_nav.dart';
@@ -9,11 +10,7 @@ class ExamPage extends StatelessWidget {
   final bool showBottomNav;
   final ValueChanged<int>? onTabSelected;
 
-  const ExamPage({
-    super.key,
-    this.showBottomNav = true,
-    this.onTabSelected,
-  });
+  const ExamPage({super.key, this.showBottomNav = true, this.onTabSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +21,7 @@ class ExamPage extends StatelessWidget {
       children: [
         TopHeader(
           title: 'Ujian',
+          matchMapelStyle: true,
           onAvatarTap: () {
             if (onTabSelected != null) {
               onTabSelected!(4);
@@ -35,24 +33,24 @@ class ExamPage extends StatelessWidget {
         Expanded(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 76,
-                    height: 76,
-                    decoration: const BoxDecoration(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
                       color: AppColors.lightBlue,
-                      shape: BoxShape.circle,
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
                       Icons.quiz_outlined,
-                      size: 40,
+                      size: 22,
                       color: AppColors.blue,
                     ),
                   ),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 14),
                   const Text(
                     'Halaman Belum Dibuat',
                     style: TextStyle(
@@ -61,12 +59,12 @@ class ExamPage extends StatelessWidget {
                       color: AppColors.text,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
                   const Text(
                     'Fitur Ujian sedang dalam tahap pengembangan.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: AppColors.greyText,
                       fontWeight: FontWeight.w500,
                     ),
@@ -102,10 +100,8 @@ class ExamPage extends StatelessWidget {
   void _handleNav(BuildContext context, int index) {
     if (index == 2) return;
     if (index == 0) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        AppRoutes.home,
-        (route) => false,
-      );
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(AppRoutes.home, (route) => false);
     } else if (index == 1) {
       Navigator.of(context).pushNamed(AppRoutes.subjects);
     } else if (index == 3) {
@@ -129,11 +125,7 @@ class ProfilePage extends StatelessWidget {
   final bool showBottomNav;
   final ValueChanged<int>? onTabSelected;
 
-  const ProfilePage({
-    super.key,
-    this.showBottomNav = true,
-    this.onTabSelected,
-  });
+  const ProfilePage({super.key, this.showBottomNav = true, this.onTabSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -218,10 +210,8 @@ class ProfilePage extends StatelessWidget {
   void _handleNav(BuildContext context, int index) {
     if (index == 4) return;
     if (index == 0) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        AppRoutes.home,
-        (route) => false,
-      );
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(AppRoutes.home, (route) => false);
     } else if (index == 1) {
       Navigator.of(context).pushNamed(AppRoutes.subjects);
     } else if (index == 2) {

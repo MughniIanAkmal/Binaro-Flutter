@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
 import '../models/assignment.dart';
@@ -20,25 +21,30 @@ class HomePage extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final horizontal = width >= 900 ? 48.0 : width >= 600 ? 32.0 : 20.0;
+        final horizontal = width >= 900
+            ? 48.0
+            : width >= 600
+            ? 32.0
+            : 16.0;
         final maxContentWidth = width >= 1000 ? 980.0 : double.infinity;
 
         final subjectCrossAxisCount = width >= 900
             ? 4
             : width >= 600
-                ? 3
-                : 2;
+            ? 3
+            : 2;
 
         final subjectAspectRatio = width >= 900
             ? 1.15
             : width >= 600
-                ? 1.05
-                : 0.92;
+            ? 1.05
+            : 0.92;
 
         return Column(
           children: [
             TopHeader(
               title: 'Beranda',
+              matchMapelStyle: true,
               onAvatarTap: () {
                 if (onTabSelected != null) {
                   onTabSelected!(4);
@@ -57,18 +63,18 @@ class HomePage extends StatelessWidget {
                       SliverPadding(
                         padding: EdgeInsets.fromLTRB(
                           horizontal,
-                          24,
+                          14,
                           horizontal,
                           20,
                         ),
                         sliver: SliverList(
                           delegate: SliverChildListDelegate([
                             const _Greeting(),
-                            const SizedBox(height: 24),
+                            const SizedBox(height: 16),
                             const SectionTitle(title: 'Menu'),
                             const SizedBox(height: 14),
                             _HomeMenuBar(onTabSelected: onTabSelected),
-                            const SizedBox(height: 28),
+                            const SizedBox(height: 20),
                             const SectionTitle(title: 'Tugas & PR Mendatang'),
                             const SizedBox(height: 14),
                           ]),
@@ -79,7 +85,7 @@ class HomePage extends StatelessWidget {
                         sliver: SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) => Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
+                              padding: const EdgeInsets.only(bottom: 14),
                               child: AssignmentCard(item: assignments[index]),
                             ),
                             childCount: assignments.length,
@@ -120,7 +126,7 @@ class HomePage extends StatelessWidget {
                                   style: TextStyle(
                                     color: AppColors.blue,
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 16,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ),
@@ -137,18 +143,19 @@ class HomePage extends StatelessWidget {
                         ),
                         sliver: SliverGrid(
                           delegate: SliverChildBuilderDelegate(
-                            (context, index) => SubjectCard(
-                              subject: subjects[index],
-                            ),
+                            (context, index) =>
+                                SubjectCard(subject: subjects[index]),
                             childCount: subjects.length,
                           ),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: subjectCrossAxisCount,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            childAspectRatio: subjectAspectRatio,
-                          ),
+                                crossAxisCount: subjectCrossAxisCount,
+                                crossAxisSpacing: 14,
+                                mainAxisSpacing: 14,
+                                childAspectRatio: width < 600
+                                    ? 0.98
+                                    : subjectAspectRatio,
+                              ),
                         ),
                       ),
                     ],
@@ -175,9 +182,8 @@ class _Greeting extends StatelessWidget {
           'Halo, Budi Santoso!',
           style: TextStyle(
             color: AppColors.text,
-            fontSize: 28,
+            fontSize: 20,
             fontWeight: FontWeight.w800,
-            letterSpacing: -0.5,
           ),
         ),
         SizedBox(height: 6),
@@ -189,7 +195,7 @@ class _Greeting extends StatelessWidget {
               'Kelas 5 • SDN Kalitapen 01',
               style: TextStyle(
                 color: AppColors.blue,
-                fontSize: 15,
+                fontSize: 12,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -210,7 +216,7 @@ class _HomeMenuBar extends StatelessWidget {
     return Row(
       children: [
         for (int i = 0; i < menuItems.length; i++) ...[
-          if (i > 0) const SizedBox(width: 14),
+          if (i > 0) const SizedBox(width: 8),
           Expanded(
             child: _MenuItemCard(
               item: menuItems[i],
@@ -248,15 +254,15 @@ class _MenuItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final cardHeight = constraints.maxWidth < 110 ? 116.0 : 124.0;
-        final iconSize = constraints.maxWidth < 110 ? 36.0 : 40.0;
-        final fontSize = constraints.maxWidth < 110 ? 16.0 : 18.0;
+        final cardHeight = constraints.maxWidth < 110 ? 92.0 : 100.0;
+        final iconSize = constraints.maxWidth < 110 ? 28.0 : 32.0;
+        const fontSize = 12.0;
 
         return Container(
           height: cardHeight,
           decoration: BoxDecoration(
             color: item.backgroundColor,
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(16),
             boxShadow: const [
               BoxShadow(
                 color: Color(0x1A000000),
@@ -268,16 +274,12 @@ class _MenuItemCard extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: BorderRadius.circular(22),
+              borderRadius: BorderRadius.circular(16),
               onTap: onTap,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    item.icon,
-                    color: Colors.white,
-                    size: iconSize,
-                  ),
+                  Icon(item.icon, color: Colors.white, size: iconSize),
                   const SizedBox(height: 8),
                   Text(
                     item.title,

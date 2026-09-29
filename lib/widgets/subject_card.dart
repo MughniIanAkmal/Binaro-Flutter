@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
 import '../models/subject.dart';
@@ -7,27 +8,24 @@ class SubjectCard extends StatelessWidget {
   final Subject subject;
   final VoidCallback? onTap;
 
-  const SubjectCard({
-    super.key,
-    required this.subject,
-    this.onTap,
-  });
+  const SubjectCard({super.key, required this.subject, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: onTap ??
+        borderRadius: BorderRadius.circular(16),
+        onTap:
+            onTap ??
             () {
               Navigator.pushNamed(context, AppRoutes.chapters);
             },
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
             boxShadow: const [
               BoxShadow(
                 color: Color(0x12000000),
@@ -42,24 +40,26 @@ class SubjectCard extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: 42,
+                    height: 42,
                     decoration: BoxDecoration(
                       color: subject.orange
                           ? AppColors.lightOrange
                           : AppColors.lightBlue,
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(
                       subject.icon,
                       color: subject.orange ? AppColors.orange : AppColors.blue,
-                      size: 26,
+                      size: 23,
                     ),
                   ),
                   const Spacer(),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: subject.orange
                           ? AppColors.lightOrange
@@ -69,10 +69,11 @@ class SubjectCard extends StatelessWidget {
                     child: Text(
                       subject.chapter,
                       style: TextStyle(
-                        color:
-                            subject.orange ? AppColors.orange : AppColors.blue,
+                        color: subject.orange
+                            ? AppColors.orange
+                            : AppColors.blue,
                         fontWeight: FontWeight.w800,
-                        fontSize: 13,
+                        fontSize: 12,
                       ),
                     ),
                   ),
@@ -85,7 +86,7 @@ class SubjectCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 17,
+                  fontSize: 15,
                   fontWeight: FontWeight.w800,
                 ),
               ),
@@ -94,7 +95,7 @@ class SubjectCard extends StatelessWidget {
                 '${subject.done} dari ${subject.total} Materi',
                 style: TextStyle(
                   color: subject.orange ? AppColors.orange : AppColors.greyText,
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -103,7 +104,7 @@ class SubjectCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: LinearProgressIndicator(
                   value: subject.done / subject.total,
-                  minHeight: 8,
+                  minHeight: 6,
                   backgroundColor: subject.orange
                       ? AppColors.lightOrange
                       : const Color(0xFFDCE6FA),

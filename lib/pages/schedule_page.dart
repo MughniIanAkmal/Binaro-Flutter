@@ -1,5 +1,7 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
 import '../models/schedule_item.dart';
@@ -10,11 +12,11 @@ import '../widgets/top_header.dart';
 class CustomAppScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.trackpad,
-        PointerDeviceKind.stylus,
-      };
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+  };
 }
 
 class SchedulePage extends StatefulWidget {
@@ -34,27 +36,25 @@ class SchedulePage extends StatefulWidget {
 class _SchedulePageState extends State<SchedulePage> {
   int selectedDay = 0;
 
-  final days = const [
-    'Senin',
-    'Selasa',
-    'Rabu',
-    'Kamis',
-    'Jumat',
-    'Sabtu',
-  ];
+  final days = const ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final horizontal = width >= 900 ? 48.0 : width >= 600 ? 32.0 : 20.0;
+        final horizontal = width >= 900
+            ? 48.0
+            : width >= 600
+            ? 32.0
+            : 16.0;
         final maxContentWidth = width >= 1000 ? 980.0 : double.infinity;
 
         final content = Column(
           children: [
             TopHeader(
               title: 'Jadwal Mapel',
+              matchMapelStyle: true,
               onAvatarTap: () {
                 if (widget.onTabSelected != null) {
                   widget.onTabSelected!(4);
@@ -72,10 +72,10 @@ class _SchedulePageState extends State<SchedulePage> {
                     slivers: [
                       // Tombol Hari Horizontal Scroll (Sangat mulus dan responsif di layar mobile & sempit)
                       SliverPadding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 12),
+                        padding: const EdgeInsets.only(top: 14, bottom: 10),
                         sliver: SliverToBoxAdapter(
                           child: SizedBox(
-                            height: 56,
+                            height: 52,
                             child: ScrollConfiguration(
                               behavior: CustomAppScrollBehavior(),
                               child: SingleChildScrollView(
@@ -83,43 +83,57 @@ class _SchedulePageState extends State<SchedulePage> {
                                 physics: const BouncingScrollPhysics(
                                   parent: AlwaysScrollableScrollPhysics(),
                                 ),
-                                padding: EdgeInsets.symmetric(horizontal: horizontal),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: horizontal,
+                                ),
                                 child: Row(
                                   children: List.generate(days.length, (index) {
                                     final active = selectedDay == index;
                                     return Padding(
                                       padding: EdgeInsets.only(
-                                        right: index < days.length - 1 ? 10 : 0,
+                                        right: index < days.length - 1 ? 8 : 0,
                                       ),
                                       child: GestureDetector(
                                         behavior: HitTestBehavior.opaque,
-                                        onTap: () => setState(() => selectedDay = index),
+                                        onTap: () =>
+                                            setState(() => selectedDay = index),
                                         child: AnimatedContainer(
-                                          duration: const Duration(milliseconds: 200),
+                                          duration: const Duration(
+                                            milliseconds: 200,
+                                          ),
                                           curve: Curves.easeInOut,
                                           padding: EdgeInsets.symmetric(
-                                            horizontal: width < 360 ? 16 : 20,
-                                            vertical: 10,
+                                            horizontal: width < 360 ? 12 : 14,
+                                            vertical: 8,
                                           ),
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
                                             color: active
                                                 ? AppColors.blue
                                                 : Colors.white,
-                                            borderRadius: BorderRadius.circular(30),
+                                            borderRadius: BorderRadius.circular(
+                                              30,
+                                            ),
                                             border: active
                                                 ? null
                                                 : Border.all(
-                                                    color: const Color(0xFFE5E7EB),
+                                                    color: const Color(
+                                                      0xFFE5E7EB,
+                                                    ),
                                                     width: 1.2,
                                                   ),
                                             boxShadow: active
                                                 ? [
                                                     BoxShadow(
                                                       color: AppColors.blue
-                                                          .withValues(alpha: 0.25),
+                                                          .withValues(
+                                                            alpha: 0.25,
+                                                          ),
                                                       blurRadius: 8,
-                                                      offset: const Offset(0, 3),
+                                                      offset: const Offset(
+                                                        0,
+                                                        3,
+                                                      ),
                                                     ),
                                                   ]
                                                 : const [
@@ -137,7 +151,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                                 const Icon(
                                                   Icons.check_circle_outline,
                                                   color: Colors.white,
-                                                  size: 19,
+                                                  size: 15,
                                                 ),
                                                 const SizedBox(width: 6),
                                               ],
@@ -147,7 +161,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                                   color: active
                                                       ? Colors.white
                                                       : AppColors.greyText,
-                                                  fontSize: 15,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w700,
                                                 ),
                                               ),
@@ -183,20 +197,23 @@ class _SchedulePageState extends State<SchedulePage> {
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              Text(
-                                'Jadwal Hari ${days[selectedDay]}',
-                                style: const TextStyle(
-                                  color: AppColors.text,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w800,
+                              Expanded(
+                                child: Text(
+                                  'Jadwal Hari ${days[selectedDay]}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    color: AppColors.text,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ),
-                              const Spacer(),
                               if (selectedDay == 0)
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 8,
+                                    horizontal: 12,
+                                    vertical: 6,
                                   ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
@@ -213,7 +230,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                     '4 Pelajaran',
                                     style: TextStyle(
                                       color: AppColors.greyText,
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -226,21 +243,19 @@ class _SchedulePageState extends State<SchedulePage> {
                       SliverPadding(
                         padding: EdgeInsets.symmetric(horizontal: horizontal),
                         sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              final list = scheduleForDay(selectedDay);
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
-                                child: ScheduleCard(item: list[index]),
-                              );
-                            },
-                            childCount: scheduleForDay(selectedDay).length,
-                          ),
+                          delegate: SliverChildBuilderDelegate((
+                            context,
+                            index,
+                          ) {
+                            final list = scheduleForDay(selectedDay);
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: ScheduleCard(item: list[index]),
+                            );
+                          }, childCount: scheduleForDay(selectedDay).length),
                         ),
                       ),
-                      const SliverPadding(
-                        padding: EdgeInsets.only(bottom: 28),
-                      ),
+                      const SliverPadding(padding: EdgeInsets.only(bottom: 28)),
                     ],
                   ),
                 ),
@@ -265,10 +280,9 @@ class _SchedulePageState extends State<SchedulePage> {
               onChanged: (index) {
                 if (index == 3) return;
                 if (index == 0) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.home,
-                    (route) => false,
-                  );
+                  Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil(AppRoutes.home, (route) => false);
                 } else if (index == 1) {
                   Navigator.of(context).pushNamed(AppRoutes.subjects);
                 } else if (index == 2) {

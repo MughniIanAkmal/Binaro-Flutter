@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
 
@@ -10,7 +11,7 @@ class ViewAllButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      height: 48,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -26,7 +27,8 @@ class ViewAllButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: onTap ??
+          onTap:
+              onTap ??
               () {
                 Navigator.pushNamed(context, AppRoutes.homeworkNotifications);
               },
@@ -35,7 +37,7 @@ class ViewAllButton extends StatelessWidget {
               'Lihat Semua Tugas (5)  →',
               style: TextStyle(
                 color: AppColors.blue,
-                fontSize: 17,
+                fontSize: 13,
                 fontWeight: FontWeight.w800,
               ),
             ),

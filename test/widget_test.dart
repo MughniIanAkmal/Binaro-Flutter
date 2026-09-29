@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:binaro_app/main.dart';
-import 'package:binaro_app/pages/other_tabs_pages.dart';
-import 'package:binaro_app/widgets/top_header.dart';
-import 'package:binaro_app/widgets/bottom_nav.dart';
+import 'package:binaro_profile/main.dart';
+import 'package:binaro_profile/pages/other_tabs_pages.dart';
+import 'package:binaro_profile/widgets/top_header.dart';
+import 'package:binaro_profile/widgets/bottom_nav.dart';
+import 'package:binaro_profile/widgets/profile/profile_page.dart' as profile;
 
 void main() {
-  testWidgets('App smoke test and navigation verification', (WidgetTester tester) async {
+  testWidgets('App smoke test and navigation verification', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const BinaroApp());
     expect(find.text('BINARO'), findsAny);
     expect(find.text('Beranda'), findsWidgets);
@@ -22,7 +25,10 @@ void main() {
     // Check Ujian page header and placeholder
     expect(find.byType(TopHeader), findsOneWidget);
     expect(find.text('Halaman Belum Dibuat'), findsOneWidget);
-    expect(find.text('Fitur Ujian sedang dalam tahap pengembangan.'), findsOneWidget);
+    expect(
+      find.text('Fitur Ujian sedang dalam tahap pengembangan.'),
+      findsOneWidget,
+    );
     // Verify hero section is NOT present
     expect(find.text('Penilaian Tengah Semester (PTS)'), findsNothing);
     expect(find.text('Simulasi Ujian Mandiri'), findsNothing);
@@ -31,34 +37,31 @@ void main() {
     await tester.tap(find.text('Profil').first);
     await tester.pumpAndSettle();
 
-    // Check Profile page header and placeholder
+    // Check the new profile screen is connected to the profile tab.
     expect(find.byType(TopHeader), findsOneWidget);
-    expect(find.text('Halaman Belum Dibuat'), findsOneWidget);
-    expect(find.text('Fitur Profil sedang dalam tahap pengembangan.'), findsOneWidget);
-    // Verify hero section is NOT present
-    expect(find.text('Peringkat Kelas'), findsNothing);
-    expect(find.text('Bintang Dikumpulkan'), findsNothing);
+    expect(find.text('Budi Santoso'), findsOneWidget);
+    expect(find.text('Kartu & Barcode Absensi'), findsOneWidget);
   });
 
-  testWidgets('ExamPage standalone has Header, placeholder, and BottomNav', (WidgetTester tester) async {
+  testWidgets('ExamPage standalone has Header, placeholder, and BottomNav', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: ExamPage(showBottomNav: true),
-      ),
+      const MaterialApp(home: ExamPage(showBottomNav: true)),
     );
     expect(find.byType(TopHeader), findsOneWidget);
     expect(find.text('Halaman Belum Dibuat'), findsOneWidget);
     expect(find.byType(BottomNav), findsOneWidget);
   });
 
-  testWidgets('ProfilePage standalone has Header, placeholder, and BottomNav', (WidgetTester tester) async {
+  testWidgets('ProfilePage standalone shows profile content and BottomNav', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: ProfilePage(showBottomNav: true),
-      ),
+      const MaterialApp(home: profile.ProfilePage(showBottomNav: true)),
     );
     expect(find.byType(TopHeader), findsOneWidget);
-    expect(find.text('Halaman Belum Dibuat'), findsOneWidget);
+    expect(find.text('Budi Santoso'), findsOneWidget);
     expect(find.byType(BottomNav), findsOneWidget);
   });
 }

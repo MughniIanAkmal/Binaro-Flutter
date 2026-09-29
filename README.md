@@ -1,4 +1,4 @@
-# binaro_app
+# binaro_profile
 
 A new Flutter project.
 

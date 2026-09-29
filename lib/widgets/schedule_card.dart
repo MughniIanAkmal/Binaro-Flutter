@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../constants/app_colors.dart';
 import '../models/schedule_item.dart';
 
@@ -13,10 +14,10 @@ class ScheduleCard extends StatelessWidget {
     final compact = media.size.width < 380;
 
     return Container(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: item.orange ? AppColors.orange : AppColors.blue,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(
             color: Color(0x18000000),
@@ -27,29 +28,29 @@ class ScheduleCard extends StatelessWidget {
       ),
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: compact ? 16 : 20,
-          vertical: compact ? 16 : 18,
+          horizontal: compact ? 14 : 16,
+          vertical: 14,
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
             Container(
-              width: compact ? 64 : 72,
-              height: compact ? 64 : 72,
+              width: compact ? 48 : 54,
+              height: compact ? 48 : 54,
               decoration: BoxDecoration(
                 color: item.orange ? AppColors.orange : AppColors.blue,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 item.icon,
                 color: Colors.white,
-                size: compact ? 34 : 38,
+                size: compact ? 27 : 30,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,24 +61,20 @@ class ScheduleCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.text,
-                      fontSize: compact ? 18 : 20,
+                      fontSize: 15,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.alarm,
-                        color: Colors.black54,
-                        size: 18,
-                      ),
+                      const Icon(Icons.alarm, color: Colors.black54, size: 16),
                       const SizedBox(width: 6),
                       Text(
                         item.time,
                         style: const TextStyle(
                           color: AppColors.greyText,
-                          fontSize: 15,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

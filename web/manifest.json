@@ -1,6 +1,6 @@
 {
-    "name": "binaro_app",
-    "short_name": "binaro_app",
+    "name": "binaro_profile",
+    "short_name": "binaro_profile",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

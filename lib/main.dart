@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'core/app_routes.dart';
 import 'core/app_theme.dart';
 import 'pages/main_shell.dart';
@@ -11,6 +12,7 @@ import 'pages/lesson_detail_page.dart';
 import 'pages/quiz_page.dart';
 import 'pages/homework_notification_page.dart';
 import 'pages/other_tabs_pages.dart';
+import 'widgets/profile/profile_page.dart' as profile;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +51,7 @@ class BinaroApp extends StatelessWidget {
             const HomeworkNotificationPage(),
         AppRoutes.exam: (context) => const ExamPage(),
         AppRoutes.schedule: (context) => const SimpleSchedulePage(),
-        AppRoutes.profile: (context) => const ProfilePage(),
+        AppRoutes.profile: (context) => const profile.ProfilePage(),
       },
     );
   }

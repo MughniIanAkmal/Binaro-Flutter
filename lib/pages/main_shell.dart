@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../widgets/bottom_nav.dart';
 import 'home_page.dart';
 import 'subject_list_page.dart';
 import 'other_tabs_pages.dart';
 import 'schedule_page.dart';
+import '../widgets/profile/profile_page.dart' as profile;
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
@@ -30,16 +32,13 @@ class _MainShellState extends State<MainShell> {
       const SubjectListPage(showBackButton: false, showBottomNav: false),
       ExamPage(showBottomNav: false, onTabSelected: _onTabSelected),
       SchedulePage(showBottomNav: false, onTabSelected: _onTabSelected),
-      ProfilePage(showBottomNav: false, onTabSelected: _onTabSelected),
+      profile.ProfilePage(showBottomNav: false, onTabSelected: _onTabSelected),
     ];
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: IndexedStack(
-          index: selectedIndex,
-          children: pages,
-        ),
+        child: IndexedStack(index: selectedIndex, children: pages),
       ),
       bottomNavigationBar: SafeArea(
         top: false,

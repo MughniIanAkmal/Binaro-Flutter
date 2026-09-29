@@ -9,6 +9,7 @@ class TopHeader extends StatelessWidget {
   final VoidCallback? onBackTap;
   final VoidCallback? onNotificationTap;
   final VoidCallback? onAvatarTap;
+  final bool matchMapelStyle;
 
   const TopHeader({
     super.key,
@@ -17,6 +18,7 @@ class TopHeader extends StatelessWidget {
     this.onBackTap,
     this.onNotificationTap,
     this.onAvatarTap,
+    this.matchMapelStyle = false,
   });
 
   @override
@@ -24,15 +26,24 @@ class TopHeader extends StatelessWidget {
     final media = MediaQuery.of(context);
     final width = media.size.width;
     final compact = width < 380;
+    final compactStyle = matchMapelStyle;
     final horizontalPadding = width >= 900
         ? 48.0
         : width >= 600
         ? 32.0
+        : compactStyle
+        ? 16.0
         : 20.0;
     final maxContentWidth = width >= 1000 ? 980.0 : double.infinity;
 
     return Container(
-      height: compact ? 76 : 88,
+      height: compactStyle
+          ? compact
+                ? 70
+                : 76
+          : compact
+          ? 76
+          : 88,
       width: double.infinity,
       decoration: const BoxDecoration(
         color: AppColors.blue,
@@ -62,36 +73,57 @@ class TopHeader extends StatelessWidget {
                       ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      onPressed: onBackTap ?? () => Navigator.of(context).maybePop(),
+                      onPressed:
+                          onBackTap ?? () => Navigator.of(context).maybePop(),
                     ),
                   )
                 else
                   Container(
-                    width: compact ? 48 : 54,
-                    height: compact ? 48 : 54,
+                    width: compactStyle
+                        ? compact
+                              ? 42
+                              : 48
+                        : compact
+                        ? 48
+                        : 54,
+                    height: compactStyle
+                        ? compact
+                              ? 42
+                              : 48
+                        : compact
+                        ? 48
+                        : 54,
                     decoration: BoxDecoration(
                       color: AppColors.orange,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(
+                        compactStyle ? 14 : 16,
+                      ),
                     ),
                     child: Icon(
                       Icons.school,
                       color: Colors.white,
-                      size: compact ? 26 : 30,
+                      size: compactStyle
+                          ? compact
+                                ? 24
+                                : 28
+                          : compact
+                          ? 26
+                          : 30,
                     ),
                   ),
-                const SizedBox(width: 14),
+                SizedBox(width: compactStyle ? 12 : 14),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'BINARO',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: AppColors.orange,
-                          fontSize: 16,
+                          fontSize: compactStyle ? 14 : 16,
                           fontWeight: FontWeight.w800,
                           letterSpacing: .3,
                         ),
@@ -102,7 +134,13 @@ class TopHeader extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: compact ? 21 : 24,
+                          fontSize: compactStyle
+                              ? compact
+                                    ? 19
+                                    : 22
+                              : compact
+                              ? 21
+                              : 24,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -110,7 +148,8 @@ class TopHeader extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: onNotificationTap ??
+                  onTap:
+                      onNotificationTap ??
                       () {
                         Navigator.pushNamed(
                           context,
@@ -123,7 +162,13 @@ class TopHeader extends StatelessWidget {
                       Icon(
                         Icons.notifications_none_rounded,
                         color: Colors.white,
-                        size: compact ? 28 : 32,
+                        size: compactStyle
+                            ? compact
+                                  ? 26
+                                  : 30
+                            : compact
+                            ? 28
+                            : 32,
                       ),
                       Positioned(
                         right: 1,
@@ -140,13 +185,21 @@ class TopHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: compactStyle ? 14 : 16),
                 GestureDetector(
-                  onTap: onAvatarTap ??
+                  onTap:
+                      onAvatarTap ??
                       () {
                         Navigator.pushNamed(context, AppRoutes.profile);
                       },
-                  child: const _Avatar(),
+                  child: _Avatar(
+                    size: compactStyle
+                        ? compact
+                              ? 42
+                              : 46
+                        : 50,
+                    compactStyle: compactStyle,
+                  ),
                 ),
               ],
             ),
@@ -158,14 +211,17 @@ class TopHeader extends StatelessWidget {
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar();
+  final double size;
+  final bool compactStyle;
+
+  const _Avatar({required this.size, required this.compactStyle});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50,
-      height: 50,
-      padding: const EdgeInsets.all(2.5),
+      width: size,
+      height: size,
+      padding: EdgeInsets.all(compactStyle ? 2 : 2.5),
       decoration: const BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
@@ -176,7 +232,11 @@ class _Avatar extends StatelessWidget {
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) => Container(
             color: AppColors.lightOrange,
-            child: const Icon(Icons.person, color: AppColors.blue, size: 30),
+            child: Icon(
+              Icons.person,
+              color: AppColors.blue,
+              size: compactStyle ? 26 : 30,
+            ),
           ),
         ),
       ),
