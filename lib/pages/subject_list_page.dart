@@ -8,7 +8,14 @@ import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_bottom_nav.dart';
 
 class SubjectListPage extends StatefulWidget {
-  const SubjectListPage({super.key});
+  final bool showBackButton;
+  final bool showBottomNav;
+
+  const SubjectListPage({
+    super.key,
+    this.showBackButton = false,
+    this.showBottomNav = true,
+  });
 
   @override
   State<SubjectListPage> createState() => _SubjectListPageState();
@@ -34,10 +41,10 @@ class _SubjectListPageState extends State<SubjectListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: const CustomAppBar(
-        title: 'Beranda',
+      appBar: CustomAppBar(
+        title: 'Daftar Mapel',
         showSubBrand: true,
-        showBackButton: false,
+        showBackButton: widget.showBackButton,
         showNotifications: true,
         showAvatar: true,
       ),
@@ -262,7 +269,9 @@ class _SubjectListPageState extends State<SubjectListPage> {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNav(currentIndex: 0),
+      bottomNavigationBar: widget.showBottomNav
+          ? const CustomBottomNav(currentIndex: 1)
+          : null,
     );
   }
 
