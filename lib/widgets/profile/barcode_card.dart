@@ -48,74 +48,97 @@ class BarcodeCard extends StatelessWidget {
             const SizedBox(height: 12),
             Container(
               width: double.infinity,
-              height: 170,
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
               decoration: BoxDecoration(
                 color: const Color(0xFFF0F6FF),
                 border: Border.all(color: const Color(0xFFD5E5FA)),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  QrImageView(
-                    data: 'NISN:0128492041',
-                    size: 110,
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.all(4),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: QrImageView(
+                      data: 'NISN:01234192041',
+                      size: 110,
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.qr_code_rounded, size: 14, color: Color(0xFF164E7A)),
+                      const SizedBox(width: 5),
+                      const Text(
+                        "NISN : 01234192041",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 12.5,
+                          color: Color(0xFF0F172A),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 4),
                   const Text(
                     'Tunjukkan QR ke pemindai absensi saat masuk sekolah',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                    style: TextStyle(fontSize: 10.5, color: Color(0xFF64748B)),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
-              "NISN: 0128492041",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-            ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () {},
-                    icon: const Icon(Icons.print, size: 16),
+                    icon: const Icon(Icons.print_outlined, size: 16),
                     label: const Text(
                       "Cetak Kartu",
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1769AA),
+                      backgroundColor: const Color(0xFF164E7A),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 10),
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () {},
                     icon: const Icon(
-                      Icons.download,
+                      Icons.file_download_outlined,
                       size: 16,
-                      color: Colors.blue,
+                      color: Color(0xFF164E7A),
                     ),
                     label: const Text(
                       "Simpan Barcode",
-                      style: TextStyle(color: Colors.blue, fontSize: 12),
+                      style: TextStyle(
+                        color: Color(0xFF164E7A),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     style: OutlinedButton.styleFrom(
+                      backgroundColor: const Color(0xFFEFF6FF),
                       side: const BorderSide(color: Color(0xFFBFDBFE)),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),

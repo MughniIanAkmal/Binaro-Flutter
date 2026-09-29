@@ -14,12 +14,8 @@ class CustomBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    final isTablet = media.size.shortestSide >= 600;
-
     return BottomNav(
       selectedIndex: currentIndex,
-      isTablet: isTablet,
       onChanged: (index) {
         if (onTap != null) {
           onTap!(index);

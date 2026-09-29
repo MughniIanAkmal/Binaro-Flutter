@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../core/app_colors.dart';
+import '../widgets/top_header.dart';
 import 'exam_page.dart';
 
 class ExamDetailPage extends StatefulWidget {
-  const ExamDetailPage({Key? key}) : super(key: key);
+  const ExamDetailPage({super.key});
 
   @override
   State<ExamDetailPage> createState() => _ExamDetailPageState();
@@ -16,57 +18,46 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6F9),
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryNavy,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'Petunjuk Ujian',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              radius: 16,
-              backgroundColor: Colors.white24,
-              child: Icon(Icons.person, color: Colors.white, size: 20),
-            ),
-          ),
-        ],
+      backgroundColor: const Color(0xFFF8FAFC),
+      appBar: const TopHeader(
+        title: 'Petunjuk Ujian',
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Exam Header Card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x0A000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
-                      color: AppColors.primaryNavy.withOpacity(0.1),
+                      color: AppColors.primaryNavy,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(
-                      Icons.calculate_outlined,
-                      color: AppColors.primaryNavy,
-                      size: 28,
+                    child: const Icon(
+                      Icons.grid_view_rounded,
+                      color: Colors.white,
+                      size: 24,
                     ),
                   ),
                   const SizedBox(width: 14),
@@ -80,30 +71,34 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryNavy.withOpacity(0.08),
+                            color: const Color(0xFFEFF6FF),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
                             'UJIAN TENGAH SEMESTER',
-                            style: TextStyle(
+                            style: GoogleFonts.plusJakartaSans(
                               color: AppColors.primaryNavy,
                               fontSize: 10,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                         ),
                         const SizedBox(height: 4),
-                        const Text(
+                        Text(
                           'PTS Matematika Kelas 4B',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontWeight: FontWeight.w800,
                             fontSize: 15,
+                            color: const Color(0xFF0F172A),
                           ),
                         ),
                         const SizedBox(height: 2),
-                        const Text(
+                        Text(
                           'Guru: Ibu Sarah Wijaya, S.Pd.',
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: GoogleFonts.plusJakartaSans(
+                            color: const Color(0xFF64748B),
+                            fontSize: 11.5,
+                          ),
                         ),
                       ],
                     ),
@@ -113,94 +108,103 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
             ),
             const SizedBox(height: 16),
 
-            const Text(
+            // Ringkasan Ujian Header
+            Text(
               'RINGKASAN UJIAN',
-              style: TextStyle(
-                color: Colors.grey,
+              style: GoogleFonts.plusJakartaSans(
+                color: const Color(0xFF64748B),
                 fontSize: 11,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.5,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
+
+            // 4 Grid Stat Cards (2x2)
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 2.3,
+              childAspectRatio: 2.1,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               children: [
                 _buildInfoCard(
-                  icon: Icons.access_time_filled,
-                  iconBg: const Color(0xFFE8F0FE),
-                  iconColor: Colors.blue,
+                  icon: Icons.access_time_rounded,
+                  iconBg: const Color(0xFFEFF6FF),
+                  iconColor: const Color(0xFF1E5B94),
                   title: 'Waktu',
                   value: '60 Menit',
                 ),
                 _buildInfoCard(
-                  icon: Icons.format_list_bulleted,
-                  iconBg: const Color(0xFFFFF4E5),
-                  iconColor: Colors.orange,
+                  icon: Icons.format_list_bulleted_rounded,
+                  iconBg: const Color(0xFFFFFBEB),
+                  iconColor: const Color(0xFFD97706),
                   title: 'Soal',
                   value: '20 Butir',
                 ),
                 _buildInfoCard(
-                  icon: Icons.emoji_events,
-                  iconBg: const Color(0xFFE8F8F0),
-                  iconColor: Colors.green,
+                  icon: Icons.emoji_events_outlined,
+                  iconBg: const Color(0xFFECFDF5),
+                  iconColor: const Color(0xFF059669),
                   title: 'Target KKM',
                   value: '75',
                 ),
                 _buildInfoCard(
-                  icon: Icons.auto_awesome,
-                  iconBg: const Color(0xFFF3E8FF),
-                  iconColor: Colors.purple,
+                  icon: Icons.auto_awesome_rounded,
+                  iconBg: const Color(0xFFF5F3FF),
+                  iconColor: const Color(0xFF7C3AED),
                   title: 'Koreksi',
                   value: 'Otomatis',
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
 
+            // Tips Semangat Belajar Box
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(14),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF9E6),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.amber.shade200),
+                color: const Color(0xFFFFFDF0),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: const Color(0xFFFDE68A)),
               ),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    width: 36,
+                    height: 36,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(12),
+                      color: const Color(0xFFF59E0B),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
-                      Icons.sentiment_satisfied_alt,
+                      Icons.sentiment_satisfied_alt_rounded,
                       color: Colors.white,
-                      size: 24,
+                      size: 22,
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Tips Semangat Belajar',
-                          style: TextStyle(
-                            color: Colors.brown,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: const Color(0xFFB45309),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 12,
                           ),
                         ),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                         Text(
                           'Tenang, teliti, dan jangan lupa berdoa ya!',
-                          style: TextStyle(color: Colors.brown, fontSize: 12),
+                          style: GoogleFonts.plusJakartaSans(
+                            color: const Color(0xFF92400E),
+                            fontSize: 11.5,
+                          ),
                         ),
                       ],
                     ),
@@ -208,31 +212,41 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
 
+            // Petunjuk Pengerjaan
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x08000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Icon(
-                        Icons.menu_book,
+                      const Icon(
+                        Icons.menu_book_rounded,
                         color: AppColors.primaryNavy,
                         size: 18,
                       ),
                       const SizedBox(width: 8),
-                      const Text(
+                      Text(
                         'Petunjuk Pengerjaan',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                        style: GoogleFonts.plusJakartaSans(
+                          fontWeight: FontWeight.w800,
                           fontSize: 14,
+                          color: const Color(0xFF0F172A),
                         ),
                       ),
                     ],
@@ -247,48 +261,51 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
                   _buildStepItem(
                     number: '2',
                     text: 'Pilih salah satu jawaban A, B, C, atau D.',
-                    color: Colors.orange,
+                    color: const Color(0xFFF59E0B),
                   ),
                   const SizedBox(height: 10),
                   _buildStepItem(
                     number: '3',
                     text: 'Periksa kembali lalu kumpulkan.',
-                    color: Colors.green,
+                    color: const Color(0xFF10B981),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
 
+            // Checkbox "Saya sudah siap ujian!"
             GestureDetector(
               onTap: () => setState(() => isReady = !isReady),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 12,
+                  vertical: 14,
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: isReady ? AppColors.primaryNavy : Colors.transparent,
-                    width: 1.5,
+                    color: isReady ? AppColors.primaryNavy : const Color(0xFFCBD5E1),
+                    width: isReady ? 1.8 : 1.2,
                   ),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       isReady
-                          ? Icons.check_circle
-                          : Icons.radio_button_unchecked,
-                      color: isReady ? AppColors.primaryNavy : Colors.grey,
+                          ? Icons.check_circle_rounded
+                          : Icons.radio_button_unchecked_rounded,
+                      color: isReady ? AppColors.primaryNavy : const Color(0xFF94A3B8),
+                      size: 22,
                     ),
                     const SizedBox(width: 12),
-                    const Text(
+                    Text(
                       'Saya sudah siap ujian!',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13.5,
+                        color: const Color(0xFF0F172A),
                       ),
                     ),
                   ],
@@ -297,6 +314,7 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
             ),
             const SizedBox(height: 16),
 
+            // Button Mulai Ujian Sekarang
             SizedBox(
               width: double.infinity,
               height: 48,
@@ -304,7 +322,7 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isReady
                       ? AppColors.primaryNavy
-                      : const Color(0xFFA3B8CC),
+                      : const Color(0xFF94A3B8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -320,31 +338,35 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
                         );
                       }
                     : null,
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Mulai Ujian Sekarang',
-                      style: TextStyle(
+                      style: GoogleFonts.plusJakartaSans(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 14,
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Icon(Icons.arrow_forward, color: Colors.white, size: 18),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 16),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
 
-            const Center(
+            Center(
               child: Text(
                 'Ada kendala saat membuka soal? Beritahu guru pengawasmu.',
-                style: TextStyle(color: Colors.grey, fontSize: 11),
+                style: GoogleFonts.plusJakartaSans(
+                  color: const Color(0xFF94A3B8),
+                  fontSize: 11,
+                ),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -363,11 +385,13 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            width: 36,
+            height: 36,
             decoration: BoxDecoration(
               color: iconBg,
               borderRadius: BorderRadius.circular(10),
@@ -375,22 +399,28 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
             child: Icon(icon, color: iconColor, size: 20),
           ),
           const SizedBox(width: 10),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.plusJakartaSans(
+                    color: const Color(0xFF64748B),
+                    fontSize: 10.5,
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  value,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13,
+                    color: const Color(0xFF0F172A),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -404,15 +434,20 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
   }) {
     return Row(
       children: [
-        CircleAvatar(
-          radius: 12,
-          backgroundColor: color,
+        Container(
+          width: 22,
+          height: 22,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+          alignment: Alignment.center,
           child: Text(
             number,
-            style: const TextStyle(
+            style: GoogleFonts.plusJakartaSans(
               color: Colors.white,
               fontSize: 11,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w800,
             ),
           ),
         ),
@@ -420,7 +455,11 @@ class _ExamDetailPageState extends State<ExamDetailPage> {
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 12.5,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF334155),
+            ),
           ),
         ),
       ],

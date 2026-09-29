@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
 
-class TopHeader extends StatelessWidget {
+class TopHeader extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
   final VoidCallback? onBackTap;
   final VoidCallback? onNotificationTap;
   final VoidCallback? onAvatarTap;
+  final bool showAvatar;
   final bool matchMapelStyle;
 
   const TopHeader({
@@ -18,100 +20,64 @@ class TopHeader extends StatelessWidget {
     this.onBackTap,
     this.onNotificationTap,
     this.onAvatarTap,
+    this.showAvatar = false,
     this.matchMapelStyle = false,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    final width = media.size.width;
-    final compact = width < 380;
-    final compactStyle = matchMapelStyle;
-    final horizontalPadding = width >= 900
-        ? 48.0
-        : width >= 600
-        ? 32.0
-        : compactStyle
-        ? 16.0
-        : 20.0;
-    final maxContentWidth = width >= 1000 ? 980.0 : double.infinity;
+  Size get preferredSize => const Size.fromHeight(66);
 
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: compactStyle
-          ? compact
-                ? 70
-                : 76
-          : compact
-          ? 76
-          : 88,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        color: AppColors.blue,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x22000000),
-            blurRadius: 12,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: maxContentWidth),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-            child: Row(
-              children: [
-                if (showBackButton)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back_rounded,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      onPressed:
-                          onBackTap ?? () => Navigator.of(context).maybePop(),
-                    ),
-                  )
-                else
-                  Container(
-                    width: compactStyle
-                        ? compact
-                              ? 42
-                              : 48
-                        : compact
-                        ? 48
-                        : 54,
-                    height: compactStyle
-                        ? compact
-                              ? 42
-                              : 48
-                        : compact
-                        ? 48
-                        : 54,
-                    decoration: BoxDecoration(
-                      color: AppColors.orange,
-                      borderRadius: BorderRadius.circular(
-                        compactStyle ? 14 : 16,
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.school,
+      color: AppColors.blue,
+      child: SafeArea(
+        bottom: false,
+        child: Container(
+          height: 66,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              if (showBackButton) ...[
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: onBackTap ?? () => Navigator.of(context).maybePop(),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
-                      size: compactStyle
-                          ? compact
-                                ? 24
-                                : 28
-                          : compact
-                          ? 26
-                          : 30,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
-                SizedBox(width: compactStyle ? 12 : 14),
+                ),
+              ] else ...[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.orange,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.school_rounded,
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                ),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -119,28 +85,20 @@ class TopHeader extends StatelessWidget {
                     children: [
                       Text(
                         'BINARO',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: AppColors.orange,
-                          fontSize: compactStyle ? 14 : 16,
+                        style: GoogleFonts.plusJakartaSans(
+                          color: const Color(0xFFFCD34D),
+                          fontSize: 10.5,
                           fontWeight: FontWeight.w800,
-                          letterSpacing: .3,
+                          letterSpacing: 0.5,
                         ),
                       ),
                       Text(
                         title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
-                          fontSize: compactStyle
-                              ? compact
-                                    ? 19
-                                    : 22
-                              : compact
-                              ? 21
-                              : 24,
+                          fontSize: 17,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -148,8 +106,7 @@ class TopHeader extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap:
-                      onNotificationTap ??
+                  onTap: onNotificationTap ??
                       () {
                         Navigator.pushNamed(
                           context,
@@ -159,23 +116,17 @@ class TopHeader extends StatelessWidget {
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.notifications_none_rounded,
                         color: Colors.white,
-                        size: compactStyle
-                            ? compact
-                                  ? 26
-                                  : 30
-                            : compact
-                            ? 28
-                            : 32,
+                        size: 25,
                       ),
                       Positioned(
                         right: 1,
                         top: 1,
                         child: Container(
-                          width: 10,
-                          height: 10,
+                          width: 8,
+                          height: 8,
                           decoration: const BoxDecoration(
                             color: AppColors.orange,
                             shape: BoxShape.circle,
@@ -185,58 +136,44 @@ class TopHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(width: compactStyle ? 14 : 16),
+              ],
+
+              if (showAvatar) ...[
+                const SizedBox(width: 12),
+                // Avatar Circle
                 GestureDetector(
-                  onTap:
-                      onAvatarTap ??
+                  onTap: onAvatarTap ??
                       () {
                         Navigator.pushNamed(context, AppRoutes.profile);
                       },
-                  child: _Avatar(
-                    size: compactStyle
-                        ? compact
-                              ? 42
-                              : 46
-                        : 50,
-                    compactStyle: compactStyle,
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/avatar.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          color: const Color(0xFFFFFBEB),
+                          child: const Icon(
+                            Icons.person_rounded,
+                            color: AppColors.blue,
+                            size: 22,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Avatar extends StatelessWidget {
-  final double size;
-  final bool compactStyle;
-
-  const _Avatar({required this.size, required this.compactStyle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      padding: EdgeInsets.all(compactStyle ? 2 : 2.5),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-      child: ClipOval(
-        child: Image.asset(
-          'assets/avatar.png',
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) => Container(
-            color: AppColors.lightOrange,
-            child: Icon(
-              Icons.person,
-              color: AppColors.blue,
-              size: compactStyle ? 26 : 30,
-            ),
+            ],
           ),
         ),
       ),

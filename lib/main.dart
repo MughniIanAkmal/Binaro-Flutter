@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'core/app_colors.dart';
 import 'core/app_routes.dart';
 import 'core/app_theme.dart';
 import 'pages/main_shell.dart';
@@ -11,16 +12,20 @@ import 'pages/material_list_page.dart';
 import 'pages/lesson_detail_page.dart';
 import 'pages/quiz_page.dart';
 import 'pages/homework_notification_page.dart';
-import 'pages/other_tabs_pages.dart';
+import 'pages/exam_list_page.dart';
+import 'pages/exam_detail_page.dart';
+import 'pages/exam_page.dart';
+import 'pages/exam_result.dart';
+import 'pages/schedule_page.dart';
 import 'widgets/profile/profile_page.dart' as profile;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF246795),
+      statusBarColor: AppColors.primaryNavy,
       statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Color(0xFF246795),
+      systemNavigationBarColor: AppColors.primaryNavy,
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
@@ -36,7 +41,6 @@ class BinaroApp extends StatelessWidget {
       title: 'Binaro',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      // Tampilan utama dari test_gpt (MainShell dengan BottomNav)
       initialRoute: AppRoutes.home,
       routes: {
         AppRoutes.home: (context) => const MainShell(),
@@ -49,9 +53,12 @@ class BinaroApp extends StatelessWidget {
         AppRoutes.quiz: (context) => const QuizPage(),
         AppRoutes.homeworkNotifications: (context) =>
             const HomeworkNotificationPage(),
-        AppRoutes.exam: (context) => const ExamPage(),
-        AppRoutes.schedule: (context) => const SimpleSchedulePage(),
-        AppRoutes.profile: (context) => const profile.ProfilePage(),
+        AppRoutes.exam: (context) => const ExamListPage(showBottomNav: true),
+        AppRoutes.examDetail: (context) => const ExamDetailPage(),
+        AppRoutes.examPage: (context) => const ExamPage(),
+        AppRoutes.examResult: (context) => const ExamResultPage(),
+        AppRoutes.schedule: (context) => const SchedulePage(showBottomNav: true),
+        AppRoutes.profile: (context) => const profile.ProfilePage(showBottomNav: true),
       },
     );
   }

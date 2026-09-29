@@ -19,45 +19,52 @@ class DataCard extends StatelessWidget {
           children: [
             const Row(
               children: [
-                Icon(Icons.badge_outlined, color: Color(0xFF1769AA), size: 20),
+                Icon(Icons.school_outlined, color: Color(0xFF164E7A), size: 20),
                 SizedBox(width: 8),
                 Text(
                   "Data Sekolah & Siswa",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14.5),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            _row("Nama Wali/Orang Tua", "Ibu Endang Rahayu"),
-            const Divider(),
-            _row("Nomor Absen", "08"),
-            const Divider(),
-            _row("Tahun Ajaran", "2024/2025 (Genap)"),
+            const SizedBox(height: 12),
+            _row(Icons.family_restroom_outlined, "Nama Wali / Orang Tua", "Ibu Endang Rahayu", false),
+            const Divider(height: 18, color: Color(0xFFF1F5F9)),
+            _row(Icons.format_list_numbered_rounded, "Nomor Absen", "08", false),
+            const Divider(height: 18, color: Color(0xFFF1F5F9)),
+            _row(Icons.calendar_today_outlined, "Tahun Ajaran", "2024/2025 (Genap)", true),
           ],
         ),
       ),
     );
   }
 
-  Widget _row(String key, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              key,
-              style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
+  Widget _row(IconData icon, String key, String value, bool isBlue) {
+    return Row(
+      children: [
+        Icon(icon, size: 16, color: const Color(0xFF64748B)),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            key,
+            style: const TextStyle(
+              color: Color(0xFF64748B),
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(width: 12),
-          Text(
-            value,
-            textAlign: TextAlign.right,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          value,
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 12,
+            color: isBlue ? const Color(0xFF164E7A) : const Color(0xFF0F172A),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

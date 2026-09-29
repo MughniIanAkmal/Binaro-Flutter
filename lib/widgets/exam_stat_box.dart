@@ -7,12 +7,12 @@ class ExamStatBox extends StatelessWidget {
   final Color color;
 
   const ExamStatBox({
-    Key? key,
+    super.key,
     required this.icon,
     required this.value,
     required this.label,
     required this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

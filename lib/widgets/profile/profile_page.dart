@@ -121,7 +121,7 @@ class _AppVersionCard extends StatelessWidget {
           Text('Versi Aplikasi', style: TextStyle(fontSize: 12)),
           Spacer(),
           Text(
-            'Sahabat Belajar v1.2.0 SD',
+            'Binaro v1.2.0 SD',
             style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
           ),
         ],

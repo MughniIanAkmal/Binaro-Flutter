@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary & Navy Tones
-  static const Color primaryNavy = Color(0xFF104E8B);
+  static const Color primaryNavy = Color(0xFF164E7A);
   static const Color darkNavy = Color(0xFF0D3B66);
   static const Color deepNavy = Color(0xFF082746);
   static const Color lightNavy = Color(0xFF1E60A5);

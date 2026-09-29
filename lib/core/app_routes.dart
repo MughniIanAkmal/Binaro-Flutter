@@ -8,6 +8,9 @@ class AppRoutes {
   static const String quiz = '/quiz';
   static const String homeworkNotifications = '/homework-notifications';
   static const String exam = '/exam';
+  static const String examDetail = '/exam-detail';
+  static const String examPage = '/exam-page';
+  static const String examResult = '/exam-result';
   static const String schedule = '/schedule';
   static const String profile = '/profile';
 }

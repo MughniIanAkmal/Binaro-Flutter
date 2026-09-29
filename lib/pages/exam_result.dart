@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../core/app_colors.dart';
-import '../widgets/exam_stat_box.dart';
+import '../core/app_routes.dart';
+import '../widgets/bottom_nav.dart';
+import '../widgets/top_header.dart';
 
 class ExamResultPage extends StatelessWidget {
   final int correctAnswers;
@@ -9,87 +12,60 @@ class ExamResultPage extends StatelessWidget {
   final int totalQuestions;
   final int score;
   final int timeSpentMinutes;
+  final bool showBottomNav;
 
   const ExamResultPage({
-    Key? key,
-    this.correctAnswers = 0,
-    this.wrongAnswers = 0,
+    super.key,
+    this.correctAnswers = 18,
+    this.wrongAnswers = 2,
     this.totalQuestions = 20,
-    this.score = 0,
-    this.timeSpentMinutes = 1,
-  }) : super(key: key);
+    this.score = 90,
+    this.timeSpentMinutes = 38,
+    this.showBottomNav = true,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final bool isPassed = score >= 75;
-
-    // Keamanan nilai progress indicator agar tidak terkena Unsupported operation: NaN
-    final double progressValue = (score <= 0 || score.isNaN)
-        ? 0.0
-        : (score / 100).clamp(0.0, 1.0);
-
-    String teacherNote;
-    String statusTitle;
-    String statusDescription;
-
-    if (score >= 90) {
-      statusTitle = 'Hebat, Budi Santoso!';
-      statusDescription = 'Sangat Baik & Membanggakan';
-      teacherNote =
-          '"Bagus sekali pemahaman materi pecahannya, pertahankan ya Budi!"';
-    } else if (score >= 75) {
-      statusTitle = 'Selamat, Budi Santoso!';
-      statusDescription = 'Baik & Lulus KKM';
-      teacherNote = '"Hasil pengerjaanmu sudah bagus dan lulus KKM. Tingkatkan lagi ketelitiannya ya Budi!"';
-    } else {
-      statusTitle = 'Tetap Semangat, Budi!';
-      statusDescription = 'Perlu Tingkatkan Belajar';
-      teacherNote = '"Jangan berkecil hati, pelajari lagi konsep dasar pecahannya dan tetap semangat latihan ya Budi!"';
-    }
-
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6F9),
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryNavy,
-        elevation: 0,
-        title: const Text(
-          'Hasil Ujian Siswa',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
+      backgroundColor: const Color(0xFFF8FAFC),
+      appBar: const TopHeader(
+        title: 'Hasil Ujian Siswa',
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Column(
           children: [
-            // Banner Atas
+            // Top Celebration Banner
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x08000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
-                      color: isPassed
-                          ? const Color(0xFFFFF4E5)
-                          : const Color(0xFFF0F4F8),
+                      color: const Color(0xFFFEF3C7),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(
-                      isPassed ? '🎉' : '💪',
-                      style: const TextStyle(fontSize: 24),
+                    child: const Icon(
+                      Icons.celebration_rounded,
+                      color: Color(0xFFF59E0B),
+                      size: 24,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -98,16 +74,20 @@ class ExamResultPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          statusTitle,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                          'Hebat, Budi Santoso!',
+                          style: GoogleFonts.plusJakartaSans(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 14.5,
+                            color: const Color(0xFF0F172A),
                           ),
                         ),
                         const SizedBox(height: 2),
-                        const Text(
+                        Text(
                           'Ujian telah selesai dikumpulkan tepat waktu!',
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: GoogleFonts.plusJakartaSans(
+                            color: const Color(0xFF64748B),
+                            fontSize: 11.5,
+                          ),
                         ),
                       ],
                     ),
@@ -115,139 +95,164 @@ class ExamResultPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
 
-            // Card Indikator Nilai Utama
+            // Main Score Card
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x08000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Column(
                 children: [
+                  // LULUS KKM Pill Badge
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
+                      horizontal: 10,
+                      vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: isPassed
-                          ? const Color(0xFFE8F8F0)
-                          : const Color(0xFFFFEBEB),
+                      color: const Color(0xFFECFDF5),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          isPassed ? Icons.check_circle : Icons.cancel,
-                          size: 16,
-                          color: isPassed ? Colors.green : Colors.red,
+                        const Icon(
+                          Icons.check_circle_rounded,
+                          size: 14,
+                          color: Color(0xFF10B981),
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: 5),
                         Text(
-                          isPassed
-                              ? 'LULUS KKM (Target: 75)'
-                              : 'BELUM LULUS KKM (Target: 75)',
-                          style: TextStyle(
-                            color: isPassed ? Colors.green : Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                          'LULUS KKM (Target: 75)',
+                          style: GoogleFonts.plusJakartaSans(
+                            color: const Color(0xFF059669),
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 18),
 
-                  // Circular Progress Skor Nilai (Aman NaN)
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SizedBox(
-                        width: 130,
-                        height: 130,
-                        child: CircularProgressIndicator(
-                          value: progressValue,
-                          strokeWidth: 14,
-                          backgroundColor: const Color(0xFFE0E0E0),
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            isPassed ? AppColors.primaryNavy : Colors.orange,
+                  // Circular Score Gauge
+                  SizedBox(
+                    width: 130,
+                    height: 130,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          height: 120,
+                          child: CircularProgressIndicator(
+                            value: (score / 100).clamp(0.0, 1.0),
+                            strokeWidth: 10,
+                            backgroundColor: const Color(0xFFE2E8F0),
+                            color: AppColors.primaryNavy,
                           ),
                         ),
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '$score',
-                            style: TextStyle(
-                              fontSize: 38,
-                              fontWeight: FontWeight.bold,
-                              color: isPassed
-                                  ? AppColors.primaryNavy
-                                  : Colors.orange.shade800,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '$score',
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 38,
+                                fontWeight: FontWeight.w900,
+                                color: AppColors.primaryNavy,
+                                height: 1.0,
+                              ),
                             ),
-                          ),
-                          const Text(
-                            'dari 100',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ],
+                            const SizedBox(height: 2),
+                            Text(
+                              'dari 100',
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF64748B),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 16),
 
                   Text(
-                    statusDescription,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryNavy,
+                    'Sangat Baik & Membanggakan',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w800,
+                      color: const Color(0xFF0F172A),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
 
-            // Ringkasan Statistik Benar / Salah / Waktu Menit
+            // 3 Stat Boxes
             Row(
               children: [
-                ExamStatBox(
-                  icon: Icons.check_circle_outline,
-                  value: '$correctAnswers',
-                  label: 'Benar',
-                  color: AppColors.primaryNavy,
+                Expanded(
+                  child: _buildStatBox(
+                    icon: Icons.check_rounded,
+                    value: '$correctAnswers',
+                    label: 'Benar',
+                    color: AppColors.primaryNavy,
+                  ),
                 ),
-                const SizedBox(width: 8),
-                ExamStatBox(
-                  icon: Icons.cancel_outlined,
-                  value: '$wrongAnswers',
-                  label: 'Salah',
-                  color: Colors.orange,
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _buildStatBox(
+                    icon: Icons.close_rounded,
+                    value: '$wrongAnswers',
+                    label: 'Salah',
+                    color: const Color(0xFFFFA315),
+                  ),
                 ),
-                const SizedBox(width: 8),
-                ExamStatBox(
-                  icon: Icons.access_time,
-                  value: "$timeSpentMinutes'",
-                  label: 'Menit',
-                  color: AppColors.primaryNavy,
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _buildStatBox(
+                    icon: Icons.timer_outlined,
+                    value: "$timeSpentMinutes'",
+                    label: 'Menit',
+                    color: AppColors.primaryNavy,
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
 
-            // Mapel & Catatan Guru
+            // Mata Pelajaran & Catatan Guru Card
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x08000000),
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,41 +260,45 @@ class ExamResultPage extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        width: 38,
+                        height: 38,
                         decoration: BoxDecoration(
-                          color: AppColors.primaryNavy.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xFFEFF6FF),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Icon(
-                          Icons.calculate_outlined,
+                          Icons.grid_view_rounded,
                           color: AppColors.primaryNavy,
+                          size: 20,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'MATA PELAJARAN',
-                              style: TextStyle(
-                                color: Colors.grey,
+                              style: GoogleFonts.plusJakartaSans(
+                                color: const Color(0xFF64748B),
                                 fontSize: 10,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
+                            const SizedBox(height: 2),
                             Text(
                               'PTS Matematika Kelas 4B',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 13.5,
+                                color: const Color(0xFF0F172A),
                               ),
                             ),
                             Text(
                               'Ibu Sarah Wijaya, S.Pd.',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
+                              style: GoogleFonts.plusJakartaSans(
+                                color: const Color(0xFF64748B),
+                                fontSize: 11,
                               ),
                             ),
                           ],
@@ -297,27 +306,31 @@ class ExamResultPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 12),
 
+                  // Catatan Guru Box
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF8F9FA),
+                      color: const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFF1F5F9)),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundColor: AppColors.primaryNavy.withOpacity(
-                            0.1,
+                        Container(
+                          width: 34,
+                          height: 34,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFDBEAFE),
                           ),
                           child: const Icon(
-                            Icons.person,
+                            Icons.person_rounded,
                             color: AppColors.primaryNavy,
-                            size: 22,
+                            size: 20,
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -326,30 +339,31 @@ class ExamResultPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                children: const [
-                                  Icon(
-                                    Icons.chat_bubble_outline,
-                                    size: 14,
+                                children: [
+                                  const Icon(
+                                    Icons.chat_bubble_outline_rounded,
+                                    size: 13,
                                     color: AppColors.primaryNavy,
                                   ),
-                                  SizedBox(width: 4),
+                                  const SizedBox(width: 4),
                                   Text(
                                     'Catatan Guru',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
+                                    style: GoogleFonts.plusJakartaSans(
                                       color: AppColors.primaryNavy,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                teacherNote,
-                                style: const TextStyle(
-                                  fontSize: 12,
+                                '"Bagus sekali pemahaman materi pecahannya, pertahankan ya Budi!"',
+                                style: GoogleFonts.plusJakartaSans(
+                                  color: const Color(0xFF334155),
+                                  fontSize: 11.5,
+                                  height: 1.35,
                                   fontStyle: FontStyle.italic,
-                                  color: Colors.black87,
                                 ),
                               ),
                             ],
@@ -363,31 +377,30 @@ class ExamResultPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
+            // Action Button 1: Lihat Pembahasan Soal
             SizedBox(
               width: double.infinity,
               height: 46,
               child: OutlinedButton(
+                onPressed: () {},
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.primaryNavy),
+                  foregroundColor: AppColors.primaryNavy,
+                  side: const BorderSide(color: Color(0xFFCBD5E1)),
+                  backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {},
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.menu_book,
-                      size: 18,
-                      color: AppColors.primaryNavy,
-                    ),
-                    SizedBox(width: 8),
+                    const Icon(Icons.menu_book_rounded, size: 16),
+                    const SizedBox(width: 6),
                     Text(
                       'Lihat Pembahasan Soal',
-                      style: TextStyle(
-                        color: AppColors.primaryNavy,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
@@ -396,36 +409,104 @@ class ExamResultPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
+            // Action Button 2: Kembali ke Daftar Ujian
             SizedBox(
               width: double.infinity,
               height: 46,
               child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    AppRoutes.home,
+                    (route) => false,
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryNavy,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  elevation: 0,
                 ),
-                onPressed: () => Navigator.pop(context),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.arrow_back, size: 18, color: Colors.white),
-                    SizedBox(width: 8),
+                    const Icon(Icons.arrow_back_rounded, size: 16),
+                    const SizedBox(width: 6),
                     Text(
                       'Kembali ke Daftar Ujian',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
+      ),
+      bottomNavigationBar: showBottomNav
+          ? BottomNav(
+              selectedIndex: 2,
+              onChanged: (index) {
+                if (index == 2) {
+                  Navigator.pop(context);
+                } else {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    AppRoutes.home,
+                    (route) => false,
+                  );
+                }
+              },
+            )
+          : null,
+    );
+  }
+
+  Widget _buildStatBox({
+    required IconData icon,
+    required String value,
+    required String label,
+    required Color color,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 26,
+            height: 26,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color, size: 16),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: GoogleFonts.plusJakartaSans(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              color: Colors.white.withValues(alpha: 0.9),
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }

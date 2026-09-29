@@ -55,26 +55,28 @@ class PasswordCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            _pwdField("Sandi Lama", "Masukkan kata sandi lama"),
+            _pwdField("Sandi Saat Ini", "Masukkan kata sandi lama"),
             const SizedBox(height: 10),
             _pwdField("Sandi Baru", "Minimal 6 karakter"),
             const SizedBox(height: 10),
-            _pwdField("Ulangi Sandi Baru", "Ketik kembali kata sandi baru"),
-            const SizedBox(height: 12),
+            _pwdField("Ulangi Sandi Baru", "Ketik kembali sandi baru"),
+            const SizedBox(height: 14),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              height: 44,
+              child: ElevatedButton.icon(
                 onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1769AA),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
+                icon: const Icon(Icons.sync_rounded, size: 16),
+                label: const Text(
                   "Simpan Kata Sandi Baru",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(color: Colors.white, fontSize: 12.5, fontWeight: FontWeight.w700),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF164E7A),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ),

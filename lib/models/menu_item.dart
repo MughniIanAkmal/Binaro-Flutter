@@ -16,17 +16,17 @@ class MenuItem {
 const menuItems = [
   MenuItem(
     title: 'Mapel',
-    icon: Icons.menu_book_outlined,
+    icon: Icons.menu_book_rounded,
     backgroundColor: AppColors.orange,
   ),
   MenuItem(
     title: 'Ujian',
-    icon: Icons.quiz_outlined,
-    backgroundColor: AppColors.blueMedium,
+    icon: Icons.assignment_outlined,
+    backgroundColor: AppColors.blue,
   ),
   MenuItem(
     title: 'Jadwal',
-    icon: Icons.calendar_month_outlined,
-    backgroundColor: AppColors.blueDark,
+    icon: Icons.calendar_today_rounded,
+    backgroundColor: AppColors.blue,
   ),
 ];

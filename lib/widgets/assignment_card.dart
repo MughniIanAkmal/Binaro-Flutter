@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/app_colors.dart';
 import '../core/app_routes.dart';
@@ -14,13 +15,13 @@ class AssignmentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     final compact = media.size.width < 390;
+    final color = item.orangeBar ? AppColors.orange : AppColors.blue;
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap:
-            onTap ??
+        onTap: onTap ??
             () {
               Navigator.pushNamed(context, AppRoutes.homeworkNotifications);
             },
@@ -29,11 +30,12 @@ class AssignmentCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: const Color(0xFFE2E8F0)),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x14000000),
-                blurRadius: 12,
-                offset: Offset(0, 4),
+                color: Color(0x0C000000),
+                blurRadius: 8,
+                offset: Offset(0, 3),
               ),
             ],
           ),
@@ -48,7 +50,7 @@ class AssignmentCard extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(item.icon, color: AppColors.blue, size: 22),
+                    Icon(item.icon, color: color, size: 22),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
@@ -56,21 +58,21 @@ class AssignmentCard extends StatelessWidget {
                         children: [
                           Text(
                             item.subject.toUpperCase(),
-                            style: const TextStyle(
-                              color: AppColors.orange,
-                              fontSize: 12,
+                            style: GoogleFonts.plusJakartaSans(
+                              color: color,
+                              fontSize: 11,
                               fontWeight: FontWeight.w800,
                               letterSpacing: 0.3,
                             ),
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 3),
                           Text(
                             item.title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
+                            style: GoogleFonts.plusJakartaSans(
                               color: AppColors.text,
-                              fontSize: 15,
+                              fontSize: 14.5,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -81,19 +83,19 @@ class AssignmentCard extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 42,
+                height: 40,
                 padding: EdgeInsets.symmetric(horizontal: compact ? 14 : 16),
-                color: item.orangeBar ? AppColors.orange : AppColors.blue,
+                color: color,
                 child: Row(
                   children: [
-                    const Icon(Icons.alarm, color: Colors.white, size: 16),
+                    const Icon(Icons.access_time_rounded, color: Colors.white, size: 15),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         item.deadline,
-                        style: const TextStyle(
+                        style: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 11.5,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -101,7 +103,7 @@ class AssignmentCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
-                        vertical: 5,
+                        vertical: 4,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -112,21 +114,17 @@ class AssignmentCard extends StatelessWidget {
                         children: [
                           Text(
                             'Buka',
-                            style: TextStyle(
-                              color: item.orangeBar
-                                  ? AppColors.orange
-                                  : AppColors.blue,
+                            style: GoogleFonts.plusJakartaSans(
+                              color: color,
                               fontWeight: FontWeight.w800,
-                              fontSize: 12,
+                              fontSize: 11.5,
                             ),
                           ),
                           const SizedBox(width: 2),
                           Icon(
                             Icons.chevron_right,
-                            color: item.orangeBar
-                                ? AppColors.orange
-                                : AppColors.blue,
-                            size: 16,
+                            color: color,
+                            size: 15,
                           ),
                         ],
                       ),
