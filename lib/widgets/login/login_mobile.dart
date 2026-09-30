@@ -89,7 +89,7 @@ class _LoginMobilePageState extends State<LoginMobilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
+      backgroundColor: const Color(0xFFF7F7F7),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -220,9 +220,9 @@ class _LoginMobilePageState extends State<LoginMobilePage> {
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.20),
-                      blurRadius: 15,
-                      offset: const Offset(0, 6),
+                      color: Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
@@ -243,67 +243,20 @@ class _LoginMobilePageState extends State<LoginMobilePage> {
 
                     const SizedBox(height: 7),
 
-                    Text(
-                      'Masuk sebagai $roleName',
-                      style: const TextStyle(color: Colors.grey, fontSize: 11),
+                    const Text(
+                      'Silakan masuk dengan akun siswa kamu',
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
 
-                    const SizedBox(height: 22),
+                    const SizedBox(height: 20),
 
                     // ==================================================
-                    // ROLE
+                    // USERNAME / NISN
                     // ==================================================
-                    Row(
-                      children: [
-                        Expanded(
-                          child: RoleButton(
-                            text: 'Siswa',
-                            role: UserRole.siswa,
-                            selectedRole: selectedRole,
-                            onTap: (role) =>
-                                setState(() => selectedRole = role),
-                          ),
-                        ),
-
-                        const SizedBox(width: 8),
-
-                        Expanded(
-                          child: RoleButton(
-                            text: 'Guru',
-                            role: UserRole.guru,
-                            selectedRole: selectedRole,
-                            onTap: (role) =>
-                                setState(() => selectedRole = role),
-                          ),
-                        ),
-
-                        const SizedBox(width: 8),
-
-                        Expanded(
-                          child: RoleButton(
-                            text: 'Admin',
-                            role: UserRole.admin,
-                            selectedRole: selectedRole,
-                            onTap: (role) =>
-                                setState(() => selectedRole = role),
-                          ),
-                        ),
-                      ],
+                    const LoginField(
+                      icon: Icons.person,
+                      hint: 'Username / NISN',
                     ),
-
-                    const SizedBox(height: 22),
-
-                    // ==================================================
-                    // USERNAME
-                    // ==================================================
-                    const LoginField(icon: Icons.person, hint: 'Username'),
-
-                    const SizedBox(height: 12),
-
-                    // ==================================================
-                    // FIELD SESUAI ROLE
-                    // ==================================================
-                    LoginField(icon: secondIcon, hint: secondHint),
 
                     const SizedBox(height: 12),
 
@@ -349,27 +302,23 @@ class _LoginMobilePageState extends State<LoginMobilePage> {
                       ),
                     ),
 
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 14),
 
-                    // ==================================================
-                    // AKSES UNTUK
-                    // ==================================================
                     Center(
-                      child: Text(
-                        'Akses Untuk $roleName',
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 10,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed(
+                            AppRoutes.register,
+                          );
+                        },
+                        child: const Text(
+                          'Belum punya akun? Daftar',
+                          style: TextStyle(
+                            color: primary,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacementNamed(
-                          AppRoutes.register,
-                        );
-                      },
-                      child: const Text('Belum punya akun? Daftar'),
                     ),
                   ],
                 ),

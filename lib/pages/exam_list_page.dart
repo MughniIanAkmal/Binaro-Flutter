@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../core/app_colors.dart';
+import '../core/app_routes.dart';
+import '../widgets/bottom_nav.dart';
 import '../widgets/top_header.dart';
 import '../widgets/exam_card.dart';
 import 'exam_detail_page.dart';
@@ -22,7 +24,7 @@ class _ExamListPageState extends State<ExamListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final content = Column(
       children: [
         TopHeader(
           title: 'Ujian Online',
@@ -30,6 +32,8 @@ class _ExamListPageState extends State<ExamListPage> {
           onAvatarTap: () {
             if (widget.onTabSelected != null) {
               widget.onTabSelected!(4);
+            } else {
+              Navigator.pushNamed(context, AppRoutes.profile);
             }
           },
         ),
@@ -509,5 +513,45 @@ class _ExamListPageState extends State<ExamListPage> {
         ),
       ],
     );
+
+    if (!widget.showBottomNav) {
+      return content;
+    }
+
+    final media = MediaQuery.of(context);
+    final isTablet = media.size.shortestSide >= 600;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
+      body: SafeArea(top: false, child: content),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: BottomNav(
+          selectedIndex: 2,
+          isTablet: isTablet,
+          onChanged: (index) {
+            if (widget.onTabSelected != null) {
+              widget.onTabSelected!(index);
+            } else {
+              _handleNav(context, index);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  void _handleNav(BuildContext context, int index) {
+    if (index == 2) return;
+    if (index == 0) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(AppRoutes.home, (route) => false);
+    } else if (index == 1) {
+      Navigator.of(context).pushNamed(AppRoutes.subjects);
+    } else if (index == 3) {
+      Navigator.of(context).pushNamed(AppRoutes.schedule);
+    } else if (index == 4) {
+      Navigator.of(context).pushNamed(AppRoutes.profile);
+    }
   }
 }

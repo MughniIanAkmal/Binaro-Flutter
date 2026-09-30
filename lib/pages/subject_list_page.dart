@@ -10,11 +10,13 @@ import '../widgets/custom_bottom_nav.dart';
 class SubjectListPage extends StatefulWidget {
   final bool showBackButton;
   final bool showBottomNav;
+  final ValueChanged<int>? onTabSelected;
 
   const SubjectListPage({
     super.key,
     this.showBackButton = false,
     this.showBottomNav = true,
+    this.onTabSelected,
   });
 
   @override
@@ -47,6 +49,13 @@ class _SubjectListPageState extends State<SubjectListPage> {
         showBackButton: widget.showBackButton,
         showNotifications: true,
         showAvatar: true,
+        onAvatarTap: () {
+          if (widget.onTabSelected != null) {
+            widget.onTabSelected!(4);
+          } else {
+            Navigator.pushNamed(context, AppRoutes.profile);
+          }
+        },
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

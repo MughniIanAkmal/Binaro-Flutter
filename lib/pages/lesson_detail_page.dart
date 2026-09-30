@@ -19,7 +19,7 @@ class LessonDetailPage extends StatelessWidget {
         title: 'Materi Pelajaran',
         showBackButton: true,
         showNotifications: true,
-        showAvatar: true,
+        showAvatar: false,
       ),
       body: Column(
         children: [

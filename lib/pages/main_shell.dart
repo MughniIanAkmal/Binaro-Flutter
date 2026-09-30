@@ -28,7 +28,11 @@ class _MainShellState extends State<MainShell> {
 
     final pages = [
       HomePage(onTabSelected: _onTabSelected),
-      const SubjectListPage(showBackButton: false, showBottomNav: false),
+      SubjectListPage(
+        showBackButton: false,
+        showBottomNav: false,
+        onTabSelected: _onTabSelected,
+      ),
       ExamListPage(showBottomNav: false, onTabSelected: _onTabSelected),
       SchedulePage(showBottomNav: false, onTabSelected: _onTabSelected),
       profile.ProfilePage(showBottomNav: false, onTabSelected: _onTabSelected),

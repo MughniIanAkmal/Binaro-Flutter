@@ -25,7 +25,7 @@ class ExamPage extends StatelessWidget {
         showSubBrand: true,
         showBackButton: false,
         showNotifications: true,
-        showAvatar: true,
+        showAvatar: false,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -149,7 +149,7 @@ class ProfilePage extends StatelessWidget {
         showSubBrand: true,
         showBackButton: false,
         showNotifications: true,
-        showAvatar: true,
+        showAvatar: false,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

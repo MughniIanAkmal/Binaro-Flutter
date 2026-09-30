@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleWidget,
     this.onBackTap,
     this.showNotifications = true,
-    this.showAvatar = false,
+    this.showAvatar = true,
     this.compact = false,
     this.leadingPadding,
     this.onNotificationTap,
@@ -167,25 +167,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Colors.white,
                         width: 1.5,
                       ),
                     ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/avatar.png',
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          color: const Color(0xFFFFFBEB),
-                          child: const Icon(
-                            Icons.person_rounded,
-                            color: AppColors.primaryNavy,
-                            size: 22,
-                          ),
-                        ),
-                      ),
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.person_rounded,
+                      color: Colors.white,
+                      size: 21,
                     ),
                   ),
                 ),

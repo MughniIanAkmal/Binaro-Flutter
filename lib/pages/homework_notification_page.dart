@@ -37,7 +37,7 @@ class _HomeworkNotificationPageState extends State<HomeworkNotificationPage> {
             showSubBrand: true,
             showBackButton: true,
             showNotifications: true,
-            showAvatar: true,
+            showAvatar: false,
           ),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

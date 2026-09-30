@@ -31,7 +31,12 @@ class ProfilePage extends StatelessWidget {
     final isTablet = media.size.shortestSide >= 600;
     final content = Column(
       children: [
-        TopHeader(title: 'Profil', onAvatarTap: () {}, matchMapelStyle: true),
+        TopHeader(
+          title: 'Profil',
+          onAvatarTap: () {},
+          matchMapelStyle: true,
+          showAvatar: false,
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Center(

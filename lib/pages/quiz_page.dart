@@ -60,7 +60,7 @@ class _QuizPageState extends State<QuizPage> {
         title: 'Latihan Soal',
         showBackButton: true,
         showNotifications: true,
-        showAvatar: true,
+        showAvatar: false,
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
